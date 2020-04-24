@@ -1,7 +1,7 @@
 
   // Update Selected Post
   export const updateSelectedPost = (payload)  => {
-    return{
+    return {
       type: 'UPDATE_SELECTED_POST',
       payload
     }

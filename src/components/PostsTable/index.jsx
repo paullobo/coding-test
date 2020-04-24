@@ -15,9 +15,7 @@ export class PostsTable extends Component {
        
     }
 
-    componentWillReceiveProps(nextProps){
-      console.log('PROPS::::',nextProps)
-    }
+    
 
     render() {
        const {posts} = this.props;

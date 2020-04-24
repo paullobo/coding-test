@@ -8,7 +8,7 @@ import  { updateSelectedPost } from '../../reducer/action';
 import './LandingStyle.css';
 var fetchLocked = false;
 
-export class Landing extends Component {
+class LandingSelf extends Component {
 
 
     constructor(props){
@@ -29,6 +29,10 @@ export class Landing extends Component {
         this.triggerAutomaticPostFetching()
     }
 
+    componentWillReceiveProps(nextProps){
+        console.log('PROPS::::',nextProps)
+      }
+
     triggerAutomaticPostFetching =() =>{
         const _this = this;
         setInterval(() => {
@@ -36,11 +40,7 @@ export class Landing extends Component {
         }, 10000);
     }
 
-    handleSelectePost = (p) =>{
-        this.props.selectedPost(p,()=>{
-            window.location.href='/postDetails';
-        })
-    }
+
 
     fetchData=async(pageCount)=>{
         if(!fetchLocked){
@@ -65,6 +65,11 @@ export class Landing extends Component {
         }
     }
 
+    handlePostDetails =(p)=>{
+        this.props.updateSelectedPost(p);
+        this.props.history.push('/postDetails')
+    }
+
     render() {
       return (
          <div>
@@ -75,8 +80,8 @@ export class Landing extends Component {
                      <PostsTable 
                         posts={this.state.posts} 
                         loadMore={()=>this.fetchData(this.state.pageCount++)}
-                        selectedPost={(p)=> this.handleSelectePost(p)}
-                        />}
+                        selectedPost={(p)=> this.handlePostDetails(p)}
+                      />}
                 </div>
              </div>
         </div>
@@ -84,13 +89,11 @@ export class Landing extends Component {
     }
   }
 
-  const mapStateToProps = state => ({
-    ...state,
-  });
+  const mapStateToProps = state => {
+    return state
+  };
   
-  
-  export default withRouter(connect(
+  export const Landing= connect(
     mapStateToProps,
-    { updateSelectedPost }
-  )(Landing));
-  
+    {updateSelectedPost}
+  )(LandingSelf);
