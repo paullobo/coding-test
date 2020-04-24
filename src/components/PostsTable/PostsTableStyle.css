@@ -1,0 +1,38 @@
+.tableContainer{
+   
+}
+
+.tableHead{
+    font-weight: bold;
+    font-size: 14.5px;
+}
+
+.tableHead.tableRow:hover{
+    background: #fff;
+    color:#000;
+}
+
+.tableRow{
+    display:flex;
+    border:1px solid rgba(0,0,0,0.2);
+    padding: 10px 0px;
+    border-color: rgba(0,0,0,0.2) transparent  rgba(0,0,0,0.2) transparent;
+    cursor:pointer;
+    font-size: 13.5px;
+}
+
+.tableRow:hover{
+    background: rgba(0,0,0,0.4);
+    color:#fff;
+}
+
+.tableRow div{
+    display:flex;
+    flex:1;  
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+}

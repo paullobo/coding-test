@@ -1,8 +1,11 @@
 
 import React, { Component } from "react";
+import { Link,withRouter } from "react-router-dom";
 import axios from 'axios';
 import  {PostsTable} from '../../components/PostsTable';
-
+import { connect } from "react-redux";
+import  { updateSelectedPost } from '../../reducer/action';
+import './LandingStyle.css';
 var fetchLocked = false;
 
 export class Landing extends Component {
@@ -23,7 +26,7 @@ export class Landing extends Component {
 
 
     componentWillMount =() =>{
-        //this.triggerAutomaticPostFetching()
+        this.triggerAutomaticPostFetching()
     }
 
     triggerAutomaticPostFetching =() =>{
@@ -31,6 +34,12 @@ export class Landing extends Component {
         setInterval(() => {
             _this.fetchData(_this.state.pageCount++);
         }, 10000);
+    }
+
+    handleSelectePost = (p) =>{
+        this.props.selectedPost(p,()=>{
+            window.location.href='/postDetails';
+        })
     }
 
     fetchData=async(pageCount)=>{
@@ -62,11 +71,26 @@ export class Landing extends Component {
              <div>
                  <div>
                      {this.state.fetchingData && this.state.posts.length===0 ? 
-                     'Fetching data...': <PostsTable posts={this.state.posts} loadMore={()=>this.fetchData(this.state.pageCount++)}/>}
+                     'Fetching data...': 
+                     <PostsTable 
+                        posts={this.state.posts} 
+                        loadMore={()=>this.fetchData(this.state.pageCount++)}
+                        selectedPost={(p)=> this.handleSelectePost(p)}
+                        />}
                 </div>
              </div>
         </div>
       );
     }
   }
+
+  const mapStateToProps = state => ({
+    ...state,
+  });
+  
+  
+  export default withRouter(connect(
+    mapStateToProps,
+    { updateSelectedPost }
+  )(Landing));
   

@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import InfiniteScroll from 'react-infinite-scroller';
-
+import './PostsTableStyle.css';
 export class PostsTable extends Component {
 
     constructor(props){
@@ -15,12 +15,17 @@ export class PostsTable extends Component {
        
     }
 
+    componentWillReceiveProps(nextProps){
+      console.log('PROPS::::',nextProps)
+    }
+
     render() {
        const {posts} = this.props;
       return (
-         <div>
+         <div className={'tableContainer'}>
+        
            { posts && posts.length>0 ? 
-                <div>
+                <div className={'tableRow tableHead'}>
                     <div>TITLE</div>
                     <div>URL</div>
                     <div>CREATED AT</div>
@@ -34,9 +39,9 @@ export class PostsTable extends Component {
                 loader={<div className="loader" key={0}>Loading ...</div>}
                 >
                   { posts && posts.length>0 ? 
-                        posts.map((p=><div>
+                        posts.map((p=><div onClick={()=>this.props.selectedPost(p)} className={'tableRow'}>
                             <div>{p.title}</div>
-                            <div>{p.URL}</div>
+                            <div>{p.url}</div>
                             <div>{p.created_at}</div>
                             <div>{p.author}</div>
                           </div>)): null
@@ -46,4 +51,5 @@ export class PostsTable extends Component {
       );
     }
   }
-  
+
+
